@@ -133,13 +133,10 @@ class ExternalMarkup:
 			    #CharLMEmbeddings('news-backward'),
 
 		if self._lang_id == '4':
-			embedding_types = [
-			    WordEmbeddings('es'),
-			    bert_embedding,
-			    FlairEmbeddings('spanish-forward'),
-			    FlairEmbeddings('spanish-backward'),
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(WordEmbeddings('es'))
+			embedding_types.append(FlairEmbeddings('spanish-forward'))
+			embedding_types.append(FlairEmbeddings('spanish-backward'))
+			embedding_types.append(CharacterEmbeddings())
 
 		
 		
