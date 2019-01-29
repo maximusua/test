@@ -49,9 +49,9 @@ class ExternalMarkup:
 		torch.cuda.set_device(int(self._gpu))
 		torch.cuda.is_available(), torch.cuda.current_device()
 		self._type2name = {"1": "hotel", "2": "app", "3": "villa", "4": "hostel"}
-		self._data_path = "dataset/own/"
+		self._data_path = "../dataset/own/"
 		if self._variable_system == '2':
-			self._data_path = "dataset/rnd/"
+			self._data_path = "../dataset/rnd/"
 		self._train_path = "ner_cn_train_" + self._acc_type + "_" + self._lang_id + ".csv"
 		self._valid_path = "ner_cn_valid_" + self._acc_type + "_" + self._lang_id + ".csv"
 		self._test_path = "ner_cn_test_" + self._acc_type + "_" + self._lang_id + ".csv"
@@ -60,9 +60,9 @@ class ExternalMarkup:
 
 		self.checkDataset()
 		
-		self._best_model_path="/home/max/nlp/ner/models/FLAIR/best_model_" + self._type2name[self._acc_type] + "_" + self._lang_id
+		self._best_model_path="../models/FLAIR/best_model_" + self._type2name[self._acc_type] + "_" + self._lang_id
 		if self._variable_system == '2':
-			self._best_model_path="/home/max/nlp/ner/models/FLAIR/best_rnd_model_" + self._type2name[self._acc_type] + "_" + self._lang_id
+			self._best_model_path="../models/FLAIR/best_rnd_model_" + self._type2name[self._acc_type] + "_" + self._lang_id
 
 
 		return True
@@ -73,6 +73,9 @@ class ExternalMarkup:
 			self._url_path = "http://travel-cms.fabrica.net.ua/data/dataset/ner/own/"
 			if self._variable_system == '2':
 				self._url_path = "http://travel-cms.fabrica.net.ua/data/dataset/ner/rnd/"
+			os.remove(self._data_path + self._train_path)
+			os.remove(self._data_path + self._valid_path)
+			os.remove(self._data_path + self._test_path)
 			urllib.request.urlretrieve(self._url_path + self._train_path,  self._data_path + self._train_path)
 			urllib.request.urlretrieve(self._url_path + self._valid_path,  self._data_path + self._valid_path)
 			urllib.request.urlretrieve(self._url_path + self._test_path,  self._data_path + self._test_path)
@@ -133,159 +136,90 @@ class ExternalMarkup:
 			    #CharLMEmbeddings('news-backward'),
 
 		if self._lang_id == '4':
-			embedding_types = [
-			    WordEmbeddings('es'),
-			    bert_embedding,
-			    FlairEmbeddings('spanish-forward'),
-			    FlairEmbeddings('spanish-backward'),
-			    CharacterEmbeddings(),
-			]
-
-		
+			embedding_types.append(WordEmbeddings('es'))
+			embedding_types.append(FlairEmbeddings('spanish-forward'))
+			embedding_types.append(FlairEmbeddings('spanish-backward'))
+			embedding_types.append(CharacterEmbeddings())
 		
 		if self._lang_id == '2':
-			embedding_types = [
-			    WordEmbeddings('de'),
-			    bert_embedding,
-			    FlairEmbeddings('german-forward'),
-			    FlairEmbeddings('german-backward'),
-			    CharacterEmbeddings(),
-			]
-		
+			embedding_types.append(WordEmbeddings('de'))
+			embedding_types.append(FlairEmbeddings('german-forward'))
+			embedding_types.append(FlairEmbeddings('german-backward'))
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '3':
-			embedding_types = [
-			    WordEmbeddings('fr'),
-			    bert_embedding,
-			    FlairEmbeddings('french-forward'),
-			    FlairEmbeddings('french-backward'),
-			    CharacterEmbeddings(),
-			]
-		
+			embedding_types.append(WordEmbeddings('fr'))
+			embedding_types.append(FlairEmbeddings('french-forward'))
+			embedding_types.append(FlairEmbeddings('french-backward'))
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '5':
 			embedding_types.append(WordEmbeddings('it'))
 			embedding_types.append(FlairEmbeddings('multi-forward'))
 			embedding_types.append(FlairEmbeddings('multi-backward'))
 			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '6':
-			embedding_types = [
-			    WordEmbeddings('nl'),
-			    bert_embedding,
-			    FlairEmbeddings('dutch-forward'),
-			    FlairEmbeddings('dutch-backward'),
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(WordEmbeddings('nl'))
+			embedding_types.append(FlairEmbeddings('dutch-forward'))
+			embedding_types.append(FlairEmbeddings('dutch-backward'))
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '8':
-			embedding_types = [
-			    WordEmbeddings('pt'),
-			    
-			    bert_embedding,
-			    ELMoEmbeddings('pt'),
-			    FlairEmbeddings('portuguese-forward'),
-			    FlairEmbeddings('portuguese-backward'),
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(WordEmbeddings('pt'))
+			embedding_types.append(ELMoEmbeddings('pt'))
+			embedding_types.append(FlairEmbeddings('portuguese-forward'))
+			embedding_types.append(FlairEmbeddings('portuguese-backward'))
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '9':
-			embedding_types = [
-			    WordEmbeddings('no'),
-			    bert_embedding,
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(WordEmbeddings('no'))
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '11':
-			embedding_types = [
-			    WordEmbeddings('sv'),
-			    bert_embedding,
-			    FlairEmbeddings('swedish-forward'),
-			    FlairEmbeddings('swedish-backward'),
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(WordEmbeddings('sv'))
+			embedding_types.append(FlairEmbeddings('swedish-forward'))
+			embedding_types.append(FlairEmbeddings('swedish-backward'))
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '12':
-			embedding_types = [
-			    WordEmbeddings('da'),
-			    bert_embedding,
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(WordEmbeddings('da'))
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '13':
-			embedding_types = [
-			    WordEmbeddings('cz'),
-			    bert_embedding,
-			    FlairEmbeddings('czech-forward'),
-			    FlairEmbeddings('czech-backward'),
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(WordEmbeddings('cz'))
+			embedding_types.append(FlairEmbeddings('czech-forward'))
+			embedding_types.append(FlairEmbeddings('czech-backward'))
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '14':
-			embedding_types = [
-			    bert_embedding,
-			    
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '16':
-			embedding_types = [
-			    WordEmbeddings('ja'),
-			    bert_embedding,
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(WordEmbeddings('ja'))
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '17':
-			embedding_types = [
-			    WordEmbeddings('zh'),
-			    bert_embedding,
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(WordEmbeddings('zh'))
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '18':
-			embedding_types = [
-			    WordEmbeddings('pl'),
-			    bert_embedding,
-			    FlairEmbeddings('polish-forward'),
-			    FlairEmbeddings('polish-backward'),
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(WordEmbeddings('pl'))
+			embedding_types.append(FlairEmbeddings('polish-forward'))
+			embedding_types.append(FlairEmbeddings('polish-backward'))
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '19':
-			embedding_types = [
-			    bert_embedding,
-			    CharacterEmbeddings(),
-			]
-
-		
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '20':
 			embedding_types.append(WordEmbeddings('ru'))
-
 		if self._lang_id == '21':
-			embedding_types = [
-			    WordEmbeddings('tr'),
-			    bert_embedding,
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(WordEmbeddings('tr'))
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '22':
-			embedding_types = [
-			    WordEmbeddings('ar'),
-			    bert_embedding,
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(WordEmbeddings('ar'))
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '24':
-			embedding_types = [
-			    WordEmbeddings('ko'),
-			    bert_embedding,
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(WordEmbeddings('ko'))
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '25':
-			embedding_types = [
-			    WordEmbeddings('he'),
-			    bert_embedding,
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(WordEmbeddings('he'))
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '29':
-			embedding_types = [
-			    bert_embedding,
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(CharacterEmbeddings())
 		if self._lang_id == '31':
-			embedding_types = [
-			    WordEmbeddings('pt'),
-			    bert_embedding,
-			    elmo_embedding,
-			    FlairEmbeddings('portuguese-forward'),
-			    FlairEmbeddings('portuguese-backward'),
-			    CharacterEmbeddings(),
-			]
+			embedding_types.append(WordEmbeddings('pt'))
+			embedding_types.append(ELMoEmbeddings('pt'))
+			embedding_types.append(FlairEmbeddings('portuguese-forward'))
+			embedding_types.append(FlairEmbeddings('portuguese-backward'))
+			embedding_types.append(CharacterEmbeddings())
 
 		embeddings: StackedEmbeddings = StackedEmbeddings(embeddings=embedding_types)
 
