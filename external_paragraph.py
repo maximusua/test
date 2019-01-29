@@ -73,9 +73,6 @@ class ExternalMarkup:
 			self._url_path = "http://travel-cms.fabrica.net.ua/data/dataset/ner/own/"
 			if self._variable_system == '2':
 				self._url_path = "http://travel-cms.fabrica.net.ua/data/dataset/ner/rnd/"
-			os.remove(self._data_path + self._train_path)
-			os.remove(self._data_path + self._valid_path)
-			os.remove(self._data_path + self._test_path)
 			urllib.request.urlretrieve(self._url_path + self._train_path,  self._data_path + self._train_path)
 			urllib.request.urlretrieve(self._url_path + self._valid_path,  self._data_path + self._valid_path)
 			urllib.request.urlretrieve(self._url_path + self._test_path,  self._data_path + self._test_path)
