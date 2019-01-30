@@ -236,7 +236,7 @@ class ExternalMarkup:
 			trainer = ModelTrainer.load_from_checkpoint(Path(self._best_model_path + '/checkpoint.pt'), 'SequenceTagger', corpus)
 
 		trainer.train(self._best_model_path, learning_rate=0.1, mini_batch_size=16,
-				max_epochs=10,, checkpoint=True, save_final_model=True)
+				max_epochs=10, checkpoint=True, save_final_model=True)
 
 		return True
 
